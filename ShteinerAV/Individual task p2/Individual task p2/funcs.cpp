@@ -157,7 +157,7 @@ void fill_vacancy(DbVacancies& Db, const string& link) {
 
 		getline(ss, token, ';');
 		while (token[0] == ' ') token = token.substr(1);
-		Db.arr[current_comp++].salary = stoi(token);
+		Db.arr[current_comp++].salary = stof(token);
 	}
 }
 

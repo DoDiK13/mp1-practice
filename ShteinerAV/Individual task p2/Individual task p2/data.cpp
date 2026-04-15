@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void find_vacancy(const DbCompanies& comp_s,const DbVacancies& vcn_s, DbCompanies& new_comp_s,const string& users_choice) {
+DbCompanies DbCompanies::find_vacancy(const DbVacancies& vcn_s, const string& users_choice) {
 	int cnt = 0;
 	for (int i = 0; i < vcn_s.size; i++) {
 		if (vcn_s[i].name.find(users_choice) != string::npos) {
@@ -12,19 +12,19 @@ void find_vacancy(const DbCompanies& comp_s,const DbVacancies& vcn_s, DbCompanie
 		}
 	}
 
-	new_comp_s.size = cnt;
-	new_comp_s.arr = new Company[cnt];
+	DbCompanies new_comp_s(cnt);
 
 	int k = 0;
 	for (int i = 0; i < vcn_s.size; i++) {
 		if (vcn_s[i].name.find(users_choice) != string::npos) {
 			int id = vcn_s[i].company_id - 1;
-			new_comp_s[k].company_id = comp_s[id].company_id;
-			new_comp_s[k].name = comp_s[id].name;
-			new_comp_s[k].address = comp_s[id].address;
+			new_comp_s[k].company_id = arr[id].company_id;
+			new_comp_s[k].name = arr[id].name;
+			new_comp_s[k].address = arr[id].address;
 			k++;
 		}
 	}
+	return new_comp_s;
 }
 
 void different_company(const DbCompanies& old_valid, DbCompanies& new_valid) {
@@ -152,6 +152,15 @@ const Vacancy& DbVacancies :: operator[](int index) const{
 	}
 
 	return this->arr[index];
+}
+
+DbVacancies::DbVacancies(const DbVacancies& Db) {
+	this->size = Db.size;
+	this->arr = new Vacancy[size];
+
+	for (int i = 0; i < this->size; i++) {
+		this->arr[i] = Db.arr[i];
+	}
 }
 
 void DbVacancies::print_vacancy(Company& valid_comp) {

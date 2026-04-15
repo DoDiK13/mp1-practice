@@ -8,7 +8,7 @@ struct Company{
 	string name;
 	string address;
 	
-	friend ostream& operator << ( ostream&, const Company&);
+	friend ostream& operator << (ostream&, const Company&);
 };
 
 struct Vacancy {
@@ -21,6 +21,8 @@ struct Vacancy {
 	
 	friend ostream& operator << (ostream&, const Vacancy&);
 };
+
+struct DbVacancies;
 
 struct DbCompanies {
 	Company* arr;
@@ -35,6 +37,8 @@ struct DbCompanies {
 	Company& operator[](int);
 	const Company& operator[](int) const;
 
+	DbCompanies find_vacancy(const DbVacancies&, const string&);
+
 	friend std::ostream& operator <<(std::ostream&, const DbCompanies&);
 };
 
@@ -43,7 +47,6 @@ struct DbVacancies {
 	int size;
 
 	DbVacancies() : arr(nullptr), size(0) {}
-	DbVacancies(){}
 	DbVacancies(int size);
 	DbVacancies(const DbVacancies& Db);
 
@@ -55,6 +58,4 @@ struct DbVacancies {
 };
 
 
-void find_vacancy(const DbCompanies& comp_s, const DbVacancies& vcn_s,
-	DbCompanies& new_comp_s,const string& users_choice);
 void different_company(const DbCompanies& old_valid, DbCompanies& new_valid);

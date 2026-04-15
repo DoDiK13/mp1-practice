@@ -6,15 +6,14 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    int flag1 = 0, cnt_company, cnt_vacancy;
-    string file1, file2, user1;
+    int flag1 = 0, cnt_company, cnt_vacancy;    
 
     if (argc < 3) {
         cout << "Incorrect number of arguments";
         return 1;
     }
-    file1 = argv[1];
-    file2 = argv[2];
+    string file1 = string(argv[1]);
+    string file2 = string(argv[2]);
 
     do {
         system("cls");
@@ -26,6 +25,7 @@ int main(int argc, char** argv) {
         cout << "|  0. Exit                       |\n";
         cout << "|--------------------------------|\n";
 
+        string user1;
         u_answer(user1, 2);
         system("cls");
 
@@ -40,18 +40,16 @@ int main(int argc, char** argv) {
             }
             else {
                 DbCompanies comp_s(cnt_company);
-                DbVacancies vcn_s(cnt_vacancy);
-                DbCompanies valid_comp_s;
+                DbVacancies vcn_s(cnt_vacancy);                
                 DbCompanies dif_valid_com_s;
                 string users_choice, user2;
-
                
                 system("cls");
                 fill_company(comp_s, file1);
                 fill_vacancy(vcn_s, file2);
 
                 enter_the_vcn(users_choice);
-                find_vacancy(comp_s, vcn_s, valid_comp_s, users_choice);
+                DbCompanies valid_comp_s = comp_s.find_vacancy(vcn_s, users_choice);
                 different_company(valid_comp_s, dif_valid_com_s);
 
                 system("cls");
@@ -76,6 +74,6 @@ int main(int argc, char** argv) {
         system("pause");
     } while (1);
 
-    cout << "End of the programm";
+    cout << "End of the program";
     return 0;
 }
