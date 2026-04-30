@@ -27,12 +27,12 @@ DbCompanies DbCompanies::find_vacancy(const DbVacancies& vcn_s, const string& us
 	return new_comp_s;
 }
 
-void different_company(const DbCompanies& old_valid, DbCompanies& new_valid) {
+void DbCompanies :: different_company() {
 	int i, j, cnt = 0, k = 0;
-	for (i = 0; i < old_valid.get_size(); i++) {
+	for (i = 0; i < this->get_size(); i++) {
 		int flag = 1;
 		for (j = 0; j < i; j++) {
-			if (old_valid[i].get_id() == old_valid[j].get_id()) {
+			if ((*this)[i].get_id() == (*this)[j].get_id()){
 				flag = 0;
 				break;
 			}
@@ -43,23 +43,32 @@ void different_company(const DbCompanies& old_valid, DbCompanies& new_valid) {
 		}
 	}
 
-	new_valid.arr_new_size(cnt);
+	DbCompanies new_valid(cnt);
 
-	for (i = 0; i < old_valid.get_size(); i++) {
+	for (i = 0; i < (*this).get_size(); i++) {
 		int flag = 1;
 		for (j = 0; j < i; j++) {
-			if (old_valid[i].get_id() == old_valid[j].get_id()) {
+			if ((*this)[i].get_id() == (*this)[j].get_id()) {
 				flag = 0;
 				break;
 			}
 		}
 
 		if (flag) {
-			new_valid[k].set_id(old_valid[i].get_id());
-			new_valid[k].set_name(old_valid[i].get_name());
-			new_valid[k++].set_address(old_valid[i].get_address());
+			new_valid[k].set_id((*this)[i].get_id());
+			new_valid[k].set_name((*this)[i].get_name());
+			new_valid[k++].set_address((*this)[i].get_address());
 		}
 	}
+
+	(*this).arr_new_size(cnt);
+	
+	for (int i = 0; i < k; i++) {
+		(*this)[i].set_id(new_valid[i].get_id());
+		(*this)[i].set_name(new_valid[i].get_name());
+		(*this)[i].set_address(new_valid[i].get_address());
+	}
+
 }
 
 //Company

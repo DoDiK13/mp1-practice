@@ -50,20 +50,20 @@ int main(int argc, char** argv) {
 
                 enter_the_vcn(users_choice);
                 DbCompanies valid_comp_s = comp_s.find_vacancy(vcn_s, users_choice);
-                different_company(valid_comp_s, dif_valid_com_s);
+                valid_comp_s.different_company();
 
                 system("cls");
-                cout << dif_valid_com_s;
+                cout << valid_comp_s;
 
-                if (dif_valid_com_s.get_size() != 0) {
-                    u_answer(user2, dif_valid_com_s.get_size());
+                if (valid_comp_s.get_size() != 0) {
+                    u_answer(user2, valid_comp_s.get_size());
 
                     if (user2 == "0") {
                         break;
                     }
                     else {
                         int id = stoi(user2);
-                        vcn_s.print_vacancy(dif_valid_com_s[id - 1]);
+                        vcn_s.print_vacancy(valid_comp_s[id - 1]);
                     }
                 }
             }

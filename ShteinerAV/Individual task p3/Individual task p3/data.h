@@ -61,6 +61,7 @@ public:
 	~DbCompanies();
 
 	DbCompanies find_vacancy(const DbVacancies&, const string&);
+	void different_company();
 	int get_size() const { return size; }
 	void arr_new_size(int size);
 
@@ -85,6 +86,3 @@ public:
 	Vacancy& operator[](int);
 	const Vacancy& operator[](int) const;
 };
-
-
-void different_company(const DbCompanies& old_valid, DbCompanies& new_valid);
