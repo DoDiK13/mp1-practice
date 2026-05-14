@@ -57,6 +57,7 @@ private:
 public:
 	DbCompanies() : arr(nullptr), size(0) {}
 	DbCompanies(int size);
+	DbCompanies(const string&);
 	DbCompanies(const DbCompanies& Db);
 	~DbCompanies();
 
@@ -64,6 +65,7 @@ public:
 	void different_company();
 	int get_size() const { return size; }
 	void arr_new_size(int size);
+	void fill_company(const string&);
 
 	friend std::ostream& operator <<(std::ostream&, const DbCompanies&);
 	Company& operator[](int);
@@ -77,11 +79,13 @@ private:
 public:
 	DbVacancies() : arr(nullptr), size(0) {}
 	DbVacancies(int size);
+	DbVacancies(const  string&);
 	DbVacancies(const DbVacancies& Db);
 	~DbVacancies();
 
 	void print_vacancy(Company&);
 	int get_size() const { return size; }
+	void fill_vacancy(const string& link);
 
 	Vacancy& operator[](int);
 	const Vacancy& operator[](int) const;

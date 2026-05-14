@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <string>
 #include "data.h"
 
@@ -85,6 +87,27 @@ DbCompanies::DbCompanies(int size) {
 	this->arr = new Company[size];
 }
 
+DbCompanies::DbCompanies(const string& link) {
+	ifstream file(link);
+	string str;
+	int cnt = 0;
+
+	if (!file.is_open()) {
+		cout << "Opening error 1!\n";
+	}
+
+	while (std::getline(file, str)) {
+		cnt++;
+	}
+
+	cout << "The file1 has been scanned.\n";
+
+	this->size = cnt-1;
+	this->arr = new Company[size];
+
+	fill_company(link);
+}
+
 DbCompanies::DbCompanies(const DbCompanies& Db) {
 	this->size = Db.size;
 	this->arr = new Company[size];
@@ -134,6 +157,36 @@ void DbCompanies :: arr_new_size(int size) {
 	this->arr = new Company[size];
 }
 
+void DbCompanies :: fill_company(const string& link) {
+	ifstream file(link);
+	string str;
+	int cnt = 0, current_comp = 0;
+
+	if (!file.is_open()) {
+		cout << "Opening error 1!\n";
+		return;
+	}
+
+	std::getline(file, str);
+	while (std::getline(file, str)) {
+		stringstream ss(str);
+		string token = "";
+
+		std::getline(ss, token, ';');
+		while (token[0] == ' ') token = token.substr(1);
+		(*this)[current_comp].set_id(stoi(token));
+
+		std::getline(ss, token, ';');
+		while (token[0] == ' ') token = token.substr(1);
+		(*this)[current_comp].set_name(token);
+
+		std::getline(ss, token, ';');
+		while (token[0] == ' ') token = token.substr(1);
+		(*this)[current_comp++].set_address(token);
+	}
+
+}
+
 //Vacancy
 std::ostream& operator << (std::ostream& os, const Vacancy& vcn_s) {
 	os << "| Name: " << vcn_s.name << endl;
@@ -148,6 +201,27 @@ std::ostream& operator << (std::ostream& os, const Vacancy& vcn_s) {
 DbVacancies::DbVacancies(int size) {
 	this->size = size;
 	this->arr = new Vacancy[size];
+}
+
+DbVacancies::DbVacancies(const string& link) {
+	ifstream file(link);
+	string str;
+	int cnt = 0;
+
+	if (!file.is_open()) {
+		cout << "Opening error 2!\n";
+	}
+
+	while (getline(file, str)) {
+		cnt++;
+	}
+
+	cout << "The file2 has been scanned.\n";
+
+	this->size = cnt - 1;
+	this->arr = new Vacancy[size];
+
+	fill_vacancy(link);
 }
 
 DbVacancies :: ~DbVacancies() {
@@ -188,5 +262,46 @@ void DbVacancies::print_vacancy(Company& valid_comp) {
 		if (this->arr[i].get_c_id() == valid_comp.get_id()) {
 			cout << this->arr[i];
 		}
+	}
+}
+
+void DbVacancies::fill_vacancy(const string& link) {
+	ifstream file(link);
+	string str;
+	int cnt = 0, current_comp = 0;
+
+	if (!file.is_open()) {
+		cout << "Opening error 1!\n";
+		return;
+	}
+
+	getline(file, str);
+	while (getline(file, str)) {
+		stringstream ss(str);
+		string token = "";
+
+		getline(ss, token, ';');
+		while (token[0] == ' ') token = token.substr(1);
+		(*this)[current_comp].set_v_id(stoi(token));
+
+		getline(ss, token, ';');
+		while (token[0] == ' ') token = token.substr(1);
+		(*this)[current_comp].set_c_id(stoi(token));
+
+		getline(ss, token, ';');
+		while (token[0] == ' ') token = token.substr(1);
+		(*this)[current_comp].set_name(token);
+
+		getline(ss, token, ';');
+		while (token[0] == ' ') token = token.substr(1);
+		(*this)[current_comp].set_conditions(token);
+
+		getline(ss, token, ';');
+		while (token[0] == ' ') token = token.substr(1);
+		(*this)[current_comp].set_requirements(token);
+
+		getline(ss, token, ';');
+		while (token[0] == ' ') token = token.substr(1);
+		(*this)[current_comp++].set_salary(stoi(token));
 	}
 }

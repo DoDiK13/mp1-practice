@@ -6,7 +6,6 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    int flag1 = 0, cnt_company, cnt_vacancy;
 
     if (argc < 3) {
         cout << "Incorrect number of arguments";
@@ -20,8 +19,7 @@ int main(int argc, char** argv) {
         cout << "|--------------------------------|\n";
         cout << "|      SEARCH FOR VACANCIES      |\n";
         cout << "|--------------------------------|\n";
-        cout << "|  1. Scan the list              |\n";
-        cout << "|  2. Search for vacancies       |\n";
+        cout << "|  1. Search for vacancies       |\n";
         cout << "|  0. Exit                       |\n";
         cout << "|--------------------------------|\n";
 
@@ -30,41 +28,31 @@ int main(int argc, char** argv) {
         system("cls");
 
         if (user1 == "1") {
-            cnt_company = scan_company(file1);
-            cnt_vacancy = scan_vacancy(file2);
-            flag1 = 1;
-        }
-        else if (user1 == "2") {
-            if (flag1 == 0) {
-                cout << "The file has not been scanned!\n";
-            }
-            else {
-                DbCompanies comp_s(cnt_company);
-                DbVacancies vcn_s(cnt_vacancy);
-                DbCompanies dif_valid_com_s;
-                string users_choice, user2;
+            
+            DbCompanies comp_s(file1);
+            DbVacancies vcn_s(file2);
+            DbCompanies dif_valid_com_s;
+            string users_choice, user2;
 
-                system("cls");
-                fill_company(comp_s, file1);
-                fill_vacancy(vcn_s, file2);
+            system("cls");
 
-                enter_the_vcn(users_choice);
-                DbCompanies valid_comp_s = comp_s.find_vacancy(vcn_s, users_choice);
-                valid_comp_s.different_company();
+            enter_the_vcn(users_choice);
+            DbCompanies valid_comp_s = comp_s.find_vacancy(vcn_s, users_choice);
+            valid_comp_s.different_company();
 
-                system("cls");
-                cout << valid_comp_s;
+            system("cls");
+            cout << valid_comp_s;
 
-                if (valid_comp_s.get_size() != 0) {
-                    u_answer(user2, valid_comp_s.get_size());
+            if (valid_comp_s.get_size() != 0) {
+                u_answer(user2, valid_comp_s.get_size());
 
-                    if (user2 == "0") {
-                        break;
-                    }
-                    else {
-                        int id = stoi(user2);
-                        vcn_s.print_vacancy(valid_comp_s[id - 1]);
-                    }
+                if (user2 == "0") {
+                    break;
+                }
+                else {
+                    int id = stoi(user2);
+                    vcn_s.print_vacancy(valid_comp_s[id - 1]);
+          
                 }
             }
         }
