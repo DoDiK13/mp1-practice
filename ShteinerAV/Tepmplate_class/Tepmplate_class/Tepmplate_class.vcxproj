@@ -125,6 +125,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="template.cpp" />
+    <ClCompile Include="vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="template.h" />
