@@ -8,7 +8,7 @@
 
 void user_input(char* user_choice);
 void scan_item(char new_barcode[], char barcode_list[][5], char name_list[][20],
-    int price_list[], int discounts[], int price_with_discounts[], int cnt_list[]);
+    int price_list[], int discounts[], int *price_with_discounts, int cnt_list[]);
 void print_check(char name_list[][20], int price_with_discounts[], int cnt_list[], int* is_true);
 
 int main() {
